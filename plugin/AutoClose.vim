@@ -428,7 +428,12 @@ endfunction
 function! s:CreateExtraMaps()
     " Extra mapping
     inoremap <buffer> <silent> <BS>         <C-R>=<SID>Backspace()<CR>
-    inoremap <buffer> <silent> <Del>        <C-R>=<SID>Delete()<CR>
+
+    " This imap will prevent fcitx work on gvim.
+    if !has('gui_running') || !has('gui_gtk') || !has('unix')
+        inoremap <buffer> <silent> <Del>        <C-R>=<SID>Delete()<CR>
+    endif
+
     if b:AutoCloseExpandSpace
         inoremap <buffer> <silent> <Space>      <C-R>=<SID>Space()<CR>
     endif
